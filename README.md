@@ -1,3 +1,6 @@
+mvn clean install -DskipTests
+# build jar file
+
 The app will start running at http://localhost:8080.
 
 Explore Rest APIs
