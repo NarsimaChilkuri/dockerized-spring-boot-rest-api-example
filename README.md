@@ -1,5 +1,5 @@
-mvn clean install -DskipTests
 # build jar file
+mvn clean install -DskipTests
 
 The app will start running at http://localhost:8080.
 
