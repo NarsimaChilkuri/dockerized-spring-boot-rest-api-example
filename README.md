@@ -7,6 +7,9 @@ docker-compose up -d
 # Start by deploying into Stack
 docker stack deploy -c docker-compose-spring-rest-api-stack.yml spring-rest-stack
 
+# Deploying in Kubernetes
+kubectl apply -f k8s-resources/.
+
 # The app will start running at http://localhost:8080.
 
 # Explore Rest APIs
