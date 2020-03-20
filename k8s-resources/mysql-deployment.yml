@@ -21,16 +21,29 @@ spec:
         name: mysql
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: root
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql_root_password
                 
         - name: MYSQL_USER
-          value: springuser
-        
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql_user
+
         - name: MYSQL_PASSWORD
-          value: springpassword
-        
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql_password
+
         - name: MYSQL_DATABASE
-          value: springdb
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql_database
+
         ports:
         - containerPort: 3306
           name: mysql
@@ -38,6 +51,7 @@ spec:
         volumeMounts:
         - name: mysql-pv
           mountPath: /var/lib/mysql
+
       volumes:
       - name: mysql-pv
         persistentVolumeClaim:

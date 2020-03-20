@@ -10,6 +10,9 @@ docker stack deploy -c docker-compose-spring-rest-api-stack.yml spring-rest-stac
 # Deploying in Kubernetes
 kubectl apply -f k8s-resources/.
 
+# Deploying by helm chart
+helm install -g helm-chart/.
+
 # The app will start running at http://localhost:8080.
 
 # Explore Rest APIs
