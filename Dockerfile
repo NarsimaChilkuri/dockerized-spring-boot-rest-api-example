@@ -1,7 +1,21 @@
 FROM java:8-jdk-alpine
 
-COPY ./target/app-1.0-SNAPSHOT.jar /usr/app/app.jar
+ENV MAVEN_VERSION 3.2.5
 
-WORKDIR /usr/app
+RUN apk update && apk add curl
 
-ENTRYPOINT ["java","-jar","app.jar"]
+RUN curl -sSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
+  && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
+  && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+
+ENV MAVEN_HOME /usr/share/maven
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN ["mvn", "clean", "install"]
+
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","target/app-1.0-SNAPSHOT.jar"]
