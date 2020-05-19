@@ -1,25 +1,23 @@
-pipeline{
-  agent any 
-  stages{
-    stage('SonarQube analysis') {
-      environment {
-        scannerHome = tool 'SonarQubeScanner'
-      }
-      steps {
-          withSonarQubeEnv('SonarQubeScanner') {
-            sh "${scannerHome}/bin/sonar-scanner"
-          }
-      }
-    }
-    stage("Quality Gate"){
-       steps{
-          timeout(time: 1, unit: 'HOURS') {
-              def qg = waitForQualityGate()
-              if (qg.status != 'OK') {
-                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
+pipeline {
+        agent any
+        stages {
+          stage("build & SonarQube analysis") {
+            agent any
+            steps {
+              withSonarQubeEnv('SonarQubeScanner') {
+                sh 'mvn clean package sonar:sonar'
               }
+            }
           }
-      }
-    }
-  }
+         stage("Quality Gate"){
+           timeout(time: 1, unit: 'HOURS') {
+             steps{
+               def qg = waitForQualityGate()
+               if (qg.status != 'OK') {
+                   error "Pipeline aborted due to quality gate failure: ${qg.status}"
+               }
+             }
+           }
+         } 
+       }
 }
