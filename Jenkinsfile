@@ -9,7 +9,7 @@ pipeline {
                      withSonarQubeEnv('SonarQubeServer') {
                         sh "${scannerHome}/bin/sonar-scanner"
                      }
-                     timeout(time: 1, unit: 'HOURS') {
+                     timeout(time: 1, unit: 'MINUTES') {
                         script{
                           def qg = waitForQualityGate()
                           if (qg.status != 'OK') {
