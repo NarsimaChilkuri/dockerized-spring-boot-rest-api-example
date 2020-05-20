@@ -21,9 +21,11 @@ pipeline {
                           else{
                             
                                withCredentials([usernamePassword(credentialsId: 'nexus-repo', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                                  sh "docker build . -t localhost:8083/repository/sonarqube-repo/spring-rest-api:${DOCKER_TAG}"
+                                  sh "docker build -f dockerfile-static -t localhost:8083/repository/sonarqube-repo/spring-rest-api:${DOCKER_TAG} ." 
                                   sh "docker login localhost:8083 -u ${user} -p ${pass}"
                                   sh "docker push localhost:8083/repository/sonarqube-repo/spring-rest-api:${DOCKER_TAG}"
+                                  sh "docker run -d -p 8060:8080 --name dev-spring localhost:8083/repository/sonarqube-repo/spring-rest-api:${DOCKER_TAG}"
+                                  sh "docker run -d -p 8070:8080 --name uat-spring localhost:8083/repository/sonarqube-repo/spring-rest-api:${DOCKER_TAG}"
                                }
         
 
