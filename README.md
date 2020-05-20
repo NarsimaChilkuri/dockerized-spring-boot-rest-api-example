@@ -61,15 +61,13 @@ spring.jpa.hibernate.ddl-auto = update
 
 V1__init.sql 
 
-CREATE TABLE users (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
-  username varchar(100) NOT NULL,
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -----------------------------------
+
 
 # Build custom sonar image using dockerfile-custom-sonar
 
 docker build -t <custom_sonar_qube_image_name> -f dockerfile-custom-sonar .
+
 
 
 # Start SonarQube Container using custom image of SonarQube you Created
@@ -86,6 +84,8 @@ Create a webhook in SonarQube pointing to JENKINS HOST
 docker run -d -p 8081:8081 -p 8083:8083 --name nexus  sonatype/nexus3
 
 Create a docker private repo in nexus repo manager
+
+
 
 # Steps for docker to allowing insecure registry
 
