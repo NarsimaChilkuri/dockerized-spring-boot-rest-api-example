@@ -21,14 +21,14 @@ mysql:
     type: Opaque
     data:
       mysql_root_password: root
-      mysql_user: springuser
-      mysql_password: springpassword
-      mysql_database: springdb
+      mysql_user: root
+      mysql_password: 123456
+      mysql_database: dev
 
 
 spring:
   name: spring-rest
-  repository: 74744556/spring-rest-api
+  repository: localhost:8083/repository/sonarqube-repo/spring-rest-api
   tag: v1
   pullPolicy: IfNotPresent
   replicaCount: 1

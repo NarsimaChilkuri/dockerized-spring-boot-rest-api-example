@@ -74,7 +74,24 @@ docker build -t <custom_sonar_qube_image_name> -f dockerfile-custom-sonar .
 
 docker run -d -p 9000:9000 <custom_sonar_qube_image_name>
 
-Create a webhook in SonarQube pointing to JENKINS HOST
+
+
+# Create a webhook in SonarQube pointing to JENKINS HOST
+
+To create the webhook form the SonarQube interface, to do so you can perform the following steps
+
+1. Login to SonarQube with admin user
+2. Navigate to the webhooks page : Administration->Configurations->webhooks
+3. Create a new webhook: Click on create new webhook and then fill the below form and hit create button. The webhook URL should follow this form https://${jenkins_domain}/sonarqube-webhook/. The / at the end of the user is very important and without it, you may experience some errors triggering the webhooks.
+
+
+----------------------------------
+
+Ignore test cases while running maven project with sonar
+
+mvn sonar:sonar -Dmaven.test.skip=true
+
+Note : But make sure that your unit tests ran before to have results for unit test coverage in sonar
 
 -----------------------------------
 
